@@ -1,0 +1,322 @@
+{
+	"info": {
+		"_postman_id": "525ea102-9acf-449b-b848-8613dccac3b8",
+		"name": "Films",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11087769"
+	},
+	"item": [
+		{
+			"name": "/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Fixed syntax \r",
+							"pm.test(\"Response is JSON\", function () {\r",
+							"  pm.expect(pm.response).to.be.json;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}",
+					"host": [
+						"{{BASE_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/films/<id>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/php-mysql-films-rest-api/films/459539",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"php-mysql-films-rest-api",
+						"films",
+						"459539"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/films?title=<search_text>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/php-mysql-films-rest-api/films?title=Lord",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"php-mysql-films-rest-api",
+						"films"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Lord"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/films",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"New film ID stored\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"NEW_FILM_ID\", jsonData.films.id);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "PHP Rules",
+							"type": "text"
+						},
+						{
+							"key": "overview",
+							"value": "PHP is a great language",
+							"type": "text"
+						},
+						{
+							"key": "runtime",
+							"value": "102",
+							"type": "text"
+						},
+						{
+							"key": "releaseDate",
+							"value": "12/09/2021",
+							"type": "text"
+						},
+						{
+							"key": "directors[0]",
+							"value": "24",
+							"type": "text"
+						},
+						{
+							"key": "actors[0]",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "actors[1]",
+							"value": "5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/films",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"films"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/films/<id>",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"PHP Rules\",\r\n    \"overview\": \"PHP is an amazing language for the modern backend\",\r\n    \"runtime\": \"45\",\r\n    \"releaseDate\": \"2021/10/01\",\r\n    \"directors\": [\r\n        \"24\"\r\n    ],\r\n    \"actors\": [\r\n        \"4\",\r\n        \"5\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/films/{{NEW_FILM_ID}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"films",
+						"{{NEW_FILM_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/films/<id>",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/films/{{NEW_FILM_ID}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"films",
+						"{{NEW_FILM_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/persons?name=<search_text>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/persons?name=McGregor",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"persons"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "McGregor"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/persons",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"New person ID stored\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"NEW_PERSON_ID\", jsonData.persons.id);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Julian Juliansen",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/persons",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"persons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/persons/<id>",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/persons/{{NEW_PERSON_ID}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"persons",
+						"{{NEW_PERSON_ID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.test(\"Response time is less than 500ms\", function () {\r",
+					"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+					"});\r",
+					"\r",
+					"pm.test(\"Response is JSON\", function() {\r",
+					"    pm.expect(pm.response).to.be.json;\r",
+					"});"
+				]
+			}
+		}
+	]
+}
