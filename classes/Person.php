@@ -8,7 +8,7 @@
  *                               Class design extended
  *                               Error handling improved
  */
-require_once 'connection.php';
+require_once 'Connection.php';
 
 class Person extends DB 
 {
@@ -16,7 +16,7 @@ class Person extends DB
      * Retrieves the persons whose name includes a certain text
      * 
      * @param   text upon which to execute the search
-     * @return  an array with person information, or false if there was an error
+     * @return array an array with person information, or false if there was an error
      */
     public function search(string $searchText): array|false
     {
@@ -45,7 +45,7 @@ class Person extends DB
      * Inserts a new person
      * 
      * @param   name of the new person
-     * @return  an array with the new person's ID, 
+     * @return array an array with the new person's ID, 
      *      -1 if the person already exists, 
      *      or 0 if there was an error
      */
@@ -94,7 +94,7 @@ class Person extends DB
      * Deletes a person
      * 
      * @param   ID of the person to delete
-     * @return  an array with the person's ID, 
+     * @return array an array with the person's ID, 
      *      -1 if the person is associated to any movie,
      *      or 0 if there was an error
      */

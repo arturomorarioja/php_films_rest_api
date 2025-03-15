@@ -8,15 +8,15 @@
  *                               Class design extended
 */
 
-require_once 'config.php';
-require_once 'utils.php';
+require_once 'Config.php';
+require_once 'Utils.php';
     
 abstract class DB extends Config 
 {
     private const ERROR_CONN = 'There was a connection error';
     protected const ERROR_QUERY = 'There was a database querying error: ';
 
-    public $pdo;
+    protected ?PDO $pdo;
     public string $lastErrorMessage = '';
 
     /**
@@ -35,7 +35,7 @@ abstract class DB extends Config
             $this->pdo = new PDO($dsn, self::USERNAME, self::PASSWORD, $options); 
         } catch (\PDOException $e) {
             Utils::debug($e);
-            $this->pdo = false;
+            $this->disconnect();
             $this->lastErrorMessage = DB::ERROR_CONN;
         }
     }

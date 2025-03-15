@@ -1,6 +1,6 @@
 <?php
 
-class Config
+abstract class Config
 {
     protected const HOST = 'localhost';
     protected const DB_NAME = 'films';

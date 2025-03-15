@@ -1,6 +1,6 @@
 <?php
 
-class Utils
+abstract class Utils
 {
     /**
      *  It debugs the received information to an HTML file.

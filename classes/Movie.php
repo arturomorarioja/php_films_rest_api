@@ -9,8 +9,8 @@
  *                               Error handling improved
  */
 
-require_once 'connection.php';
-require_once 'utils.php';
+require_once 'Connection.php';
+require_once 'Utils.php';
 
 class Movie extends DB 
 {    
@@ -18,7 +18,7 @@ class Movie extends DB
      * Retrieves the movies whose title includes a certain text
      * 
      * @param   text upon which to execute the search
-     * @return  an array with movie information,
+     * @return array an array with movie information,
      *      or false if there was an error
      */
     public function search(string $searchText): array|false
@@ -50,7 +50,7 @@ class Movie extends DB
     /**
      * Retrieves a specific film
      * 
-     * @param  int The id of the film whose information must be retrieved
+     * @param array int The id of the film whose information must be retrieved
      * @return an array with film information,
      *      or false if there was an error
      */
@@ -123,7 +123,7 @@ class Movie extends DB
      * Inserts a new movie
      * 
      * @param   movie info
-     * @return  an array with the fiml's ID,
+     * @return array an array with the fiml's ID,
      *      or false if there was an error
      */
     public function add(array $info): array|false
@@ -181,7 +181,7 @@ class Movie extends DB
      * 
      * @param   movie ID
      * @param   movie info
-     * @return  an array with the film's ID,
+     * @return array an array with the film's ID,
      *      an empty array if the film does not exist,
      *      or false if there was an error
      */
@@ -268,7 +268,7 @@ class Movie extends DB
      * Deletes a movie
      * 
      * @param   ID of the movie to delete
-     * @return  an array with the film's ID,
+     * @return array an array with the film's ID,
      *      and empty array if the film was not found,
      *      or false if there was an error
      */

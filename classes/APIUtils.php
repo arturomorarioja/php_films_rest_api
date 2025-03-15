@@ -27,13 +27,13 @@ class APIUtils
      * @param   $information    Entity information to add the HATEOAS links to
      * @param   $entity         Name of the entity the HATEOAS links will be added to.
      *                          If false, only the HATEOAS links will be returned
-     * @return  The information to be served by the API including its corresponding HATEOAS links
+     * @return string The information to be served by the API including its corresponding HATEOAS links
      */
-    static public function addHATEOAS(array|string $information = null, string $entity = null): string 
+    static public function addHATEOAS(array|string $information = '', string $entity = ''): string 
     {
         $curDir = self::urlPath();
         
-        if (!is_null($entity)) {
+        if (!$entity) {
             $apiInfo[$entity] = $information;
         }
         $apiInfo['_links'] = array(

@@ -10,10 +10,11 @@
  * @version 2.0.1 December 2024. PSR standard enforced
  *                               Class design extended
  *                               Error management improved
+ * @version 2.0.2 March 2025. Refactoring
  */
 
-require_once 'src/utils.php';
-require_once 'src/api_utils.php';
+require_once 'classes/Utils.php';
+require_once 'classes/APIUtils.php';
 
 define('POS_ENTITY', 1);
 define('POS_ID', 2);
@@ -43,6 +44,7 @@ $urlPieces = explode('/', urldecode($url));
 
 header('Content-Type: application/json');
 header('Accept-version: v1');
+http_response_code(200);
 
 $pieces = count($urlPieces);
 
@@ -50,6 +52,7 @@ if ($pieces == 1) {
     echo APIUtils::APIDescription();
 } else {
     if ($pieces > MAX_PIECES) {
+        http_response_code(400);
         echo APIUtils::formatError();
     } else {
 
@@ -58,8 +61,8 @@ if ($pieces == 1) {
         switch ($entity) {
             case ENTITY_PERSONS:
                 require_once('src/person.php');
-                $person = new Person;
-                if (!$person->pdo) {
+                $person = new Person();
+                if ($person->lastErrorMessage !== '') {
                     http_response_code(500);
                     echo APIUtils::formatError($person->lastErrorMessage);
                     exit;
@@ -131,9 +134,9 @@ if ($pieces == 1) {
                 $person = null;
                 break;  
             case ENTITY_FILMS:
-                require_once('src/movie.php');
-                $movie = new Movie;
-                if (!$movie->pdo) {
+                require_once 'src/movie.php';
+                $movie = new Movie();
+                if ($movie->lastErrorMessage !== '') {
                     http_response_code(500);
                     echo APIUtils::formatError($movie->lastErrorMessage);
                     exit;
