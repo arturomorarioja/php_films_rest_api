@@ -60,7 +60,7 @@ if ($pieces == 1) {
 
         switch ($entity) {
             case ENTITY_PERSONS:
-                require_once('src/person.php');
+                require_once('classes/Person.php');
                 $person = new Person();
                 if ($person->lastErrorMessage !== '') {
                     http_response_code(500);
@@ -134,7 +134,7 @@ if ($pieces == 1) {
                 $person = null;
                 break;  
             case ENTITY_FILMS:
-                require_once 'src/movie.php';
+                require_once 'classes/Movie.php';
                 $movie = new Movie();
                 if ($movie->lastErrorMessage !== '') {
                     http_response_code(500);
