@@ -32,8 +32,8 @@ class APIUtils
     static public function addHATEOAS(array|string $information = '', string $entity = ''): string 
     {
         $curDir = self::urlPath();
-        
-        if (!$entity) {
+
+        if ($entity) {
             $apiInfo[$entity] = $information;
         }
         $apiInfo['_links'] = array(
