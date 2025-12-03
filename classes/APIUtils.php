@@ -55,7 +55,7 @@ class APIUtils
         ];
         if ($entity) {
             $apiInfo[$entity] = $information;
-            if ($entity === Entity::ENTITY_FILMS) {
+            if ($entity === Entity::ENTITY_FILMS && $id) {
                 require_once 'classes/Movie.php';
                 $film = new Movie();
                 $first = $film->first();

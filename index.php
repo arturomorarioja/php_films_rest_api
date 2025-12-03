@@ -161,7 +161,7 @@ if ($pieces == 1) {
                             http_response_code(500);
                             echo APIUtils::formatError($movie->lastErrorMessage);
                         } else {
-                            echo APIUtils::addHATEOAS($result, Entity::ENTITY_FILMS, $filmID);
+                            echo APIUtils::addHATEOAS($result, Entity::ENTITY_FILMS, $filmID ?? 0);
                         }
                         break;
                     case 'POST':                                    // Add new film
