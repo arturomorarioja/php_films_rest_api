@@ -7,6 +7,7 @@
  * @version 1.0.1 December 2024. PSR standard enforced
  *                               Class design extended
  *                               Error handling improved
+ * @version 1.2.0 December 2025. lastID() implemented
  */
 
 require_once 'Connection.php';
@@ -116,6 +117,104 @@ class Movie extends DB
                 $this->lastErrorMessage = DB::ERROR_QUERY . $e->getMessage();
                 return false;
             }
+        }
+    }
+
+    /**
+     * Retrieves the first ID
+     * @return The first ID in the table
+     */
+    public function first(): int|false
+    {
+        $query = <<<'SQL'
+            SELECT MIN(movie_id) AS 'min_id'
+            FROM movie;
+        SQL;
+
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            $results = $stmt->fetch();
+            return $results['min_id'];
+        } catch (PDOException $e) {
+            $this->disconnect();
+            $this->lastErrorMessage = DB::ERROR_QUERY . $e->getMessage();
+            return false;
+        }
+    }
+
+    /**
+     * Retrieves the last ID
+     * @return The last ID in the table
+     */
+    public function last(): int|false
+    {
+        $query = <<<'SQL'
+            SELECT MAX(movie_id) AS 'max_id'
+            FROM movie;
+        SQL;
+
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+            $results = $stmt->fetch();
+            return $results['max_id'];
+        } catch (PDOException $e) {
+            $this->disconnect();
+            $this->lastErrorMessage = DB::ERROR_QUERY . $e->getMessage();
+            return false;
+        }
+    }
+
+    /**
+     * Retrieves the previous ID
+     * @param $id The ID to start with
+     * @return The previous ID to the received ID
+     */
+    public function prev(int $id): int|false
+    {
+        $query = <<<'SQL'
+            SELECT MAX(movie_id) AS 'prev_id'
+            FROM movie
+            WHERE movie_id < ?;
+        SQL;
+
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute([$id]);
+            $results = $stmt->fetch();
+            $prevID = $results['prev_id'];
+            return $prevID ?? $this->first();
+        } catch (PDOException $e) {
+            $this->disconnect();
+            $this->lastErrorMessage = DB::ERROR_QUERY . $e->getMessage();
+            return false;
+        }
+    }
+
+    /**
+     * Retrieves the next ID
+     * @param $id The ID to start with
+     * @return The next ID to the received ID
+     */
+    public function next(int $id): int|false
+    {
+        $query = <<<'SQL'
+            SELECT MIN(movie_id) AS 'next_id'
+            FROM movie
+            WHERE movie_id > ?;
+        SQL;
+
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute([$id]);
+            $results = $stmt->fetch();
+            $nextID = $results['next_id'];
+            return $nextID ?? $this->last();
+        } catch (PDOException $e) {
+            $this->disconnect();
+            $this->lastErrorMessage = DB::ERROR_QUERY . $e->getMessage();
+            return false;
         }
     }
 

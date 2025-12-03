@@ -154,13 +154,14 @@ if ($pieces == 1) {
                                 $result = $movie->search($_GET['title']);
                             }
                         } else {                                    // Get film by ID
-                            $result = $movie->get($urlPieces[POS_ID]);
+                            $filmID = $urlPieces[POS_ID];
+                            $result = $movie->get($filmID);
                         }
                         if (gettype($result) === 'boolean' && !$result) {
                             http_response_code(500);
                             echo APIUtils::formatError($movie->lastErrorMessage);
                         } else {
-                            echo APIUtils::addHATEOAS($result, Entity::ENTITY_FILMS);
+                            echo APIUtils::addHATEOAS($result, Entity::ENTITY_FILMS, $filmID);
                         }
                         break;
                     case 'POST':                                    // Add new film

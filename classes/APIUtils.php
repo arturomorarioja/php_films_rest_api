@@ -46,7 +46,7 @@ class APIUtils
      * @param   $id             The ID of the present resource, if any
      * @return string The information to be served by the API including its corresponding HATEOAS links
      */
-    static public function addHATEOAS(array|string $information = '', string $entity = '', string $id = ''): string 
+    static public function addHATEOAS(array|string $information = '', string $entity = '', int $id = 0): string 
     {
         $curDir = self::urlPath();
 
@@ -55,6 +55,39 @@ class APIUtils
         ];
         if ($entity) {
             $apiInfo[$entity] = $information;
+            if ($entity === Entity::ENTITY_FILMS) {
+                require_once 'classes/Movie.php';
+                $film = new Movie();
+                $first = $film->first();
+                $last = $film->last();
+                $prev = $film->prev($id);
+                $next = $film->next($id);
+
+                $apiInfo['_links'][] = 
+                [
+                    'rel' => 'first',
+                    'href' => $curDir . $entity . '/' . $first,
+                    'type' => 'GET'
+                ];
+                $apiInfo['_links'][] = 
+                [
+                    'rel' => 'prev',
+                    'href' => $curDir . $entity . '/' . $prev,
+                    'type' => 'GET'
+                ];
+                $apiInfo['_links'][] = 
+                [
+                    'rel' => 'next',
+                    'href' => $curDir . $entity . '/' . $next,
+                    'type' => 'GET'
+                ];                
+                $apiInfo['_links'][] = 
+                [
+                    'rel' => 'last',
+                    'href' => $curDir . $entity . '/' . $last,
+                    'type' => 'GET'
+                ];
+            }
         }
         if ($entity === '' || $entity === Entity::ENTITY_FILMS) {
             $apiInfo['_links'][] = 
