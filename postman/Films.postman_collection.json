@@ -42,13 +42,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost/php-mysql-films-rest-api/films/459539",
-					"protocol": "http",
+					"raw": "{{BASE_URL}}/films/459539",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
 					"path": [
-						"php-mysql-films-rest-api",
 						"films",
 						"459539"
 					]
@@ -62,13 +60,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost/php-mysql-films-rest-api/films?title=Lord",
-					"protocol": "http",
+					"raw": "{{BASE_URL}}/films?title=Lord",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
 					"path": [
-						"php-mysql-films-rest-api",
 						"films"
 					],
 					"query": [
@@ -89,12 +85,14 @@
 					"script": {
 						"exec": [
 							"pm.test(\"New film ID stored\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
+							"    let jsonData = pm.response.json();\r",
 							"    pm.environment.set(\"NEW_FILM_ID\", jsonData.films.id);\r",
-							"});"
+							"});\r",
+							""
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
 					}
 				}
 			],
