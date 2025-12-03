@@ -9,11 +9,25 @@ class APIUtils
      */
     static public function urlPath(): string
     {
-        $protocol = 
-            ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') 
-                || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
-        return $protocol . $_SERVER['HTTP_HOST'] . '/' . basename(__DIR__) . '/';     
+        $protocol =
+            ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+                || $_SERVER['SERVER_PORT'] == 443)
+            ? 'https://' : 'http://';
+
+        // Normalize paths (convert Windows backslashes to forward slashes)
+        $docRoot = str_replace('\\', '/', realpath($_SERVER['DOCUMENT_ROOT']));
+        $classDir = str_replace('\\', '/', realpath(__DIR__ . '/..'));
+
+        // Compute relative path of the project to the document root
+        $relative = str_replace($docRoot, '', $classDir);
+
+        // Ensure leading slash and remove duplicate slashes
+        $relative = '/' . ltrim($relative, '/');
+        $relative = preg_replace('#/+#', '/', $relative);
+
+        return $protocol . $_SERVER['HTTP_HOST'] . $relative . '/';
     }
+
 
     /**
      * Returns the REST API description
