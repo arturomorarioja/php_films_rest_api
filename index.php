@@ -11,8 +11,10 @@
  *                               Class design extended
  *                               Error management improved
  * @version 2.0.2 March 2025. Refactoring
+ * @version 2.1.0 December 2025. Contextual HATEOAS implemented
  */
 
+require_once 'classes/Entity.php';
 require_once 'classes/Utils.php';
 require_once 'classes/APIUtils.php';
 
@@ -20,9 +22,6 @@ define('POS_ENTITY', 1);
 define('POS_ID', 2);
 
 define('MAX_PIECES', 3);
-
-define('ENTITY_FILMS', 'films');
-define('ENTITY_PERSONS', 'persons');
 
 Utils::debug(
     'REQUEST_METHOD: ' . $_SERVER['REQUEST_METHOD'] .
@@ -59,7 +58,7 @@ if ($pieces == 1) {
         $entity = $urlPieces[POS_ENTITY];
 
         switch ($entity) {
-            case ENTITY_PERSONS:
+            case Entity::ENTITY_PERSONS:
                 require_once('classes/Person.php');
                 $person = new Person();
                 if ($person->lastErrorMessage !== '') {
@@ -81,7 +80,7 @@ if ($pieces == 1) {
                                 http_response_code(500);
                                 echo APIUtils::formatError($person->lastErrorMessage);
                             } else {
-                                echo APIUtils::addHATEOAS($result, ENTITY_PERSONS);
+                                echo APIUtils::addHATEOAS($result, Entity::ENTITY_PERSONS);
                             }
                         }
                         break;
@@ -102,7 +101,7 @@ if ($pieces == 1) {
                                     break;
                                 default:
                                     http_response_code(201);
-                                    echo APIUtils::addHATEOAS($result, ENTITY_PERSONS);
+                                    echo APIUtils::addHATEOAS($result, Entity::ENTITY_PERSONS);
                             }
                         }                        
                         break;
@@ -123,7 +122,7 @@ if ($pieces == 1) {
                                     echo APIUtils::formatError('The person is associated to a film');
                                     break;
                                 default:
-                                    echo APIUtils::addHATEOAS($result, ENTITY_PERSONS);
+                                    echo APIUtils::addHATEOAS($result, Entity::ENTITY_PERSONS);
                             }
                         }
                         break;
@@ -133,7 +132,7 @@ if ($pieces == 1) {
                 }
                 $person = null;
                 break;  
-            case ENTITY_FILMS:
+            case Entity::ENTITY_FILMS:
                 require_once 'classes/Movie.php';
                 $movie = new Movie();
                 if ($movie->lastErrorMessage !== '') {
@@ -161,7 +160,7 @@ if ($pieces == 1) {
                             http_response_code(500);
                             echo APIUtils::formatError($movie->lastErrorMessage);
                         } else {
-                            echo APIUtils::addHATEOAS($result, ENTITY_FILMS);
+                            echo APIUtils::addHATEOAS($result, Entity::ENTITY_FILMS);
                         }
                         break;
                     case 'POST':                                    // Add new film
@@ -169,7 +168,7 @@ if ($pieces == 1) {
                             http_response_code(500);
                             echo APIUtils::formatError();
                         } else {
-                            echo APIUtils::addHATEOAS($movie->add($_POST), ENTITY_FILMS);
+                            echo APIUtils::addHATEOAS($movie->add($_POST), Entity::ENTITY_FILMS);
                         }
                         break;
                     case 'PUT':                                     // Update film
@@ -189,7 +188,7 @@ if ($pieces == 1) {
                                 if ($result === []) {
                                     http_response_code(404);
                                 }
-                                echo APIUtils::addHATEOAS($result, ENTITY_FILMS);
+                                echo APIUtils::addHATEOAS($result, Entity::ENTITY_FILMS);
                             }
                         }
                         break;
@@ -206,7 +205,7 @@ if ($pieces == 1) {
                                 if ($result === []) {
                                     http_response_code(404);
                                 }
-                                echo APIUtils::addHATEOAS($result, ENTITY_FILMS);
+                                echo APIUtils::addHATEOAS($result, Entity::ENTITY_FILMS);
                             }
                         }
                         break;

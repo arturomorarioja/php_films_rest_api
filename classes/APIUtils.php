@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Entity.php';
+
 class APIUtils
 {  
     /**
@@ -27,58 +29,72 @@ class APIUtils
      * @param   $information    Entity information to add the HATEOAS links to
      * @param   $entity         Name of the entity the HATEOAS links will be added to.
      *                          If false, only the HATEOAS links will be returned
+     * @param   $id             The ID of the present resource, if any
      * @return string The information to be served by the API including its corresponding HATEOAS links
      */
-    static public function addHATEOAS(array|string $information = '', string $entity = ''): string 
+    static public function addHATEOAS(array|string $information = '', string $entity = '', string $id = ''): string 
     {
         $curDir = self::urlPath();
 
+        $apiInfo = [
+            '_links' => []
+        ];
         if ($entity) {
             $apiInfo[$entity] = $information;
         }
-        $apiInfo['_links'] = array(
-            array(
-                'rel' => ($entity == ENTITY_FILMS ? 'self' : ENTITY_FILMS),
-                'href' => $curDir . ENTITY_FILMS . '{?title=}',
-                'type' => 'GET'
-            ),
-            array(
-                'rel' => ($entity == ENTITY_FILMS ? 'self' : ENTITY_FILMS),
-                'href' => $curDir . ENTITY_FILMS . '/{id}',
-                'type' => 'GET'
-            ),
-            array(
-                'rel' => ($entity == ENTITY_FILMS ? 'self' : ENTITY_FILMS),
-                'href' => $curDir . ENTITY_FILMS,
-                'type' => 'POST'
-            ),
-            array(
-                'rel' => ($entity == ENTITY_FILMS ? 'self' : ENTITY_FILMS),
-                'href' => $curDir . ENTITY_FILMS . '/{id}',
-                'type' => 'PUT'
-            ),
-            array(
-                'rel' => ($entity == ENTITY_FILMS ? 'self' : ENTITY_FILMS),
-                'href' => $curDir . ENTITY_FILMS . '/{id}',
-                'type' => 'DELETE'
-            ),
-            array(
-                'rel' => ($entity == ENTITY_PERSONS ? 'self' : ENTITY_PERSONS),
-                'href' => $curDir . ENTITY_PERSONS . '{?name=}',
-                'type' => 'GET'
-            ),
-            array(
-                'rel' => ($entity == ENTITY_PERSONS ? 'self' : ENTITY_PERSONS),
-                'href' => $curDir . ENTITY_PERSONS,
-                'type' => 'POST'
-            ),
-            array(
-                'rel' => ($entity == ENTITY_PERSONS ? 'self' : ENTITY_PERSONS),
-                'href' => $curDir . ENTITY_PERSONS . '{id}',
-                'type' => 'DELETE'
-                )
-            );        
-            return json_encode($apiInfo);
+        if ($entity === '' || $entity === Entity::ENTITY_FILMS) {
+            $apiInfo['_links'][] = 
+                array(
+                    'rel' => ($entity == Entity::ENTITY_FILMS ? 'self' : Entity::ENTITY_FILMS),
+                    'href' => $curDir . Entity::ENTITY_FILMS . '{?title=}',
+                    'type' => 'GET'
+                );
+            $apiInfo['_links'][] = 
+                array(
+                    'rel' => ($entity == Entity::ENTITY_FILMS ? 'self' : Entity::ENTITY_FILMS),
+                    'href' => $curDir . Entity::ENTITY_FILMS . '/{id}',
+                    'type' => 'GET'
+                );
+            $apiInfo['_links'][] = 
+                array(
+                    'rel' => ($entity == Entity::ENTITY_FILMS ? 'self' : Entity::ENTITY_FILMS),
+                    'href' => $curDir . Entity::ENTITY_FILMS,
+                    'type' => 'POST'
+                );
+            $apiInfo['_links'][] = 
+                array(
+                    'rel' => ($entity == Entity::ENTITY_FILMS ? 'self' : Entity::ENTITY_FILMS),
+                    'href' => $curDir . Entity::ENTITY_FILMS . '/{id}',
+                    'type' => 'PUT'
+                );
+            $apiInfo['_links'][] = 
+                array(
+                    'rel' => ($entity == Entity::ENTITY_FILMS ? 'self' : Entity::ENTITY_FILMS),
+                    'href' => $curDir . Entity::ENTITY_FILMS . '/{id}',
+                    'type' => 'DELETE'
+                );
+        }
+        if ($entity === '' || $entity === Entity::ENTITY_PERSONS) {
+            $apiInfo['_links'][] = 
+                array(
+                    'rel' => ($entity == Entity::ENTITY_PERSONS ? 'self' : Entity::ENTITY_PERSONS),
+                    'href' => $curDir . Entity::ENTITY_PERSONS . '{?name=}',
+                    'type' => 'GET'
+                );
+            $apiInfo['_links'][] = 
+                array(
+                    'rel' => ($entity == Entity::ENTITY_PERSONS ? 'self' : Entity::ENTITY_PERSONS),
+                    'href' => $curDir . Entity::ENTITY_PERSONS,
+                    'type' => 'POST'
+                );
+            $apiInfo['_links'][] = 
+                array(
+                    'rel' => ($entity == Entity::ENTITY_PERSONS ? 'self' : Entity::ENTITY_PERSONS),
+                    'href' => $curDir . Entity::ENTITY_PERSONS . '{id}',
+                    'type' => 'DELETE'
+                );
+        }
+        return json_encode($apiInfo);
     }
     
     /**
