@@ -42,13 +42,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{BASE_URL}}/films/459539",
+					"raw": "{{BASE_URL}}/films/1895",
 					"host": [
 						"{{BASE_URL}}"
 					],
 					"path": [
 						"films",
-						"459539"
+						"1895"
 					]
 				}
 			},
@@ -119,7 +119,7 @@
 						},
 						{
 							"key": "releaseDate",
-							"value": "12/09/2021",
+							"value": "2021-09-12",
 							"type": "text"
 						},
 						{
@@ -158,7 +158,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"PHP Rules\",\r\n    \"overview\": \"PHP is an amazing language for the modern backend\",\r\n    \"runtime\": \"45\",\r\n    \"releaseDate\": \"2021/10/01\",\r\n    \"directors\": [\r\n        \"24\"\r\n    ],\r\n    \"actors\": [\r\n        \"4\",\r\n        \"5\"\r\n    ]\r\n}",
+					"raw": "{\r\n    \"title\": \"PHP Rules\",\r\n    \"overview\": \"PHP is an amazing language for the modern backend\",\r\n    \"runtime\": \"45\",\r\n    \"releaseDate\": \"2021-10-01\",\r\n    \"directors\": [\r\n        \"24\"\r\n    ],\r\n    \"actors\": [\r\n        \"4\",\r\n        \"5\"\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
