@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: php_films_api
+    ports:
+      - "8080:80"        # host:container
+    depends_on:
+      - db
+    # If you want to see Apache/PHP logs in the console, they go to stdout/stderr by default
+
+  db:
+    image: mariadb:11.4
+    container_name: films_db
+    restart: unless-stopped
+    environment:
+      # Allow empty root password so it matches Config::PASSWORD = ''
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=yes
+      # Ensure the 'films' database exists (used by Config::DB_NAME)
+      - MARIADB_DATABASE=films
+    volumes:
+      # Persistent database files
+      - films_db_data:/var/lib/mysql
+      # Initialize schema and data from your existing SQL script
+      - ./db/films.sql:/docker-entrypoint-initdb.d/films.sql:ro
+
+volumes:
+  films_db_data:
