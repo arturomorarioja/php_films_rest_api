@@ -116393,7 +116393,7 @@ INSERT INTO `movie_director` (`movie_id`, `person_id`) VALUES
 
 DROP TABLE IF EXISTS `person`;
 CREATE TABLE IF NOT EXISTS `person` (
-  `person_id` int(10) NOT NULL,
+  `person_id` int(10) NOT NULL AUTO_INCREMENT,
   `person_name` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
