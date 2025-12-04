@@ -99,7 +99,7 @@ class Movie extends DB
             $query = <<<'SQL'
                 SELECT person.person_id, person.person_name
                 FROM person INNER JOIN movie_cast ON person.person_id = movie_cast.person_id
-                WHERE movie_cast.movie_id = ?;
+                WHERE movie_cast.movie_id = ?
                 ORDER BY movie_cast.cast_order;
             SQL;
             
