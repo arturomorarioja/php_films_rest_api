@@ -5,9 +5,13 @@ It includes a debugging utility that logs every request and error to an HTML fil
 
 ## API Documentation
 
+### Installation
+- Start the application as a Docker container: `docker-compose up -d`
+- Stop the application: `docker-compose down`
+
 ### Main usage
 
-http://_<base_url>_/_<end_point>_
+http://localhost:8080/_<end_point>_
 
 ### Endpoints
 
@@ -25,15 +29,15 @@ http://_<base_url>_/_<end_point>_
 
 ### Examples 
 
-- GET http://localhost/php-mysql-films-rest-api/
-- GET http://localhost/php-mysql-films-rest-api/films/1895
-- GET http://localhost/php-mysql-films-rest-api/films?title=Godfather
-- POST http://localhost/php-mysql-films-rest-api/films
-- PUT http://localhost/php-mysql-films-rest-api/films/1895
-- DELETE http://localhost/php-mysql-films-rest-api/films/1895
-- GET http://localhost/php-mysql-films-rest-api/persons?name=McGregor
-- POST http://localhost/php-mysql-films-rest-api/persons
-- DELETE http://localhost/php-mysql-films-rest-api/persons/3061
+- GET http://localhost:8080/php-mysql-films-rest-api/
+- GET http://localhost:8080/php-mysql-films-rest-api/films/1895
+- GET http://localhost:8080/php-mysql-films-rest-api/films?title=Godfather
+- POST http://localhost:8080/php-mysql-films-rest-api/films
+- PUT http://localhost:8080/php-mysql-films-rest-api/films/1895
+- DELETE http://localhost:8080/php-mysql-films-rest-api/films/1895
+- GET http://localhost:8080/php-mysql-films-rest-api/persons?name=McGregor
+- POST http://localhost:8080/php-mysql-films-rest-api/persons
+- DELETE http://localhost:8080/php-mysql-films-rest-api/persons/3061
 
 ### Sample Output
 
@@ -73,43 +77,63 @@ Get film
     ],
     "_links": [
         {
-            "rel": "self",
-            "href": "<server_path>/php-mysql-films-rest-api/films{?title=}",
+            "rel": "first",
+            "href": "http://localhost:8080//films/5",
+            "type": "GET"
+        },
+        {
+            "rel": "prev",
+            "href": "http://localhost:8080//films/1894",
+            "type": "GET"
+        },
+        {
+            "rel": "next",
+            "href": "http://localhost:8080//films/1900",
+            "type": "GET"
+        },
+        {
+            "rel": "last",
+            "href": "http://localhost:8080//films/459488",
             "type": "GET"
         },
         {
             "rel": "self",
-            "href": "<server_path>/php-mysql-films-rest-api/films/{id}",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/films{?title=}",
             "type": "GET"
         },
         {
             "rel": "self",
-            "href": "<server_path>/php-mysql-films-rest-api/films",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/films/{id}",
+            "type": "GET"
+        },
+        {
+            "rel": "self",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/films",
             "type": "POST"
         },
         {
             "rel": "self",
-            "href": "<server_path>/php-mysql-films-rest-api/films/{id}",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/films/{id}",
             "type": "PUT"
         },
         {
             "rel": "self",
-            "href": "<server_path>/php-mysql-films-rest-api/films/{id}",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/films/{id}",
             "type": "DELETE"
         },
         {
             "rel": "persons",
-            "href": "<server_path>/php-mysql-films-rest-api/persons{?name=}",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/persons{?name=}",
             "type": "GET"
         },
         {
             "rel": "persons",
-            "href": "<server_path>/php-mysql-films-rest-api/persons",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/persons",
             "type": "POST"
         },
         {
             "rel": "persons",
-            "href": "<server_path>/php-mysql-films-rest-api/persons/{id}",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/persons/{id}",
             "type": "DELETE"
         }
     ]
@@ -149,42 +173,27 @@ Search films
     "_links": [
         {
             "rel": "self",
-            "href": "<server_path>/php-mysql-films-rest-api/films{?title=}",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/films{?title=}",
             "type": "GET"
         },
         {
             "rel": "self",
-            "href": "<server_path>/php-mysql-films-rest-api/films/{id}",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/films/{id}",
             "type": "GET"
         },
         {
             "rel": "self",
-            "href": "<server_path>/php-mysql-films-rest-api/films",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/films",
             "type": "POST"
         },
         {
             "rel": "self",
-            "href": "<server_path>/php-mysql-films-rest-api/films/{id}",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/films/{id}",
             "type": "PUT"
         },
         {
             "rel": "self",
-            "href": "<server_path>/php-mysql-films-rest-api/films/{id}",
-            "type": "DELETE"
-        },
-        {
-            "rel": "persons",
-            "href": "<server_path>/php-mysql-films-rest-api/persons{?name=}",
-            "type": "GET"
-        },
-        {
-            "rel": "persons",
-            "href": "<server_path>/php-mysql-films-rest-api/persons",
-            "type": "POST"
-        },
-        {
-            "rel": "persons",
-            "href": "<server_path>/php-mysql-films-rest-api/persons/{id}",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/films/{id}",
             "type": "DELETE"
         }
     ]
@@ -212,43 +221,18 @@ Search persons
     ],
     "_links": [
         {
-            "rel": "films",
-            "href": "<server_path>/php-mysql-films-rest-api/films{?title=}",
-            "type": "GET"
-        },
-        {
-            "rel": "films",
-            "href": "<server_path>/php-mysql-films-rest-api/films/{id}",
-            "type": "GET"
-        },
-        {
-            "rel": "films",
-            "href": "<server_path>/php-mysql-films-rest-api/films",
-            "type": "POST"
-        },
-        {
-            "rel": "films",
-            "href": "<server_path>/php-mysql-films-rest-api/films/{id}",
-            "type": "PUT"
-        },
-        {
-            "rel": "films",
-            "href": "<server_path>/php-mysql-films-rest-api/films/{id}",
-            "type": "DELETE"
-        },
-        {
             "rel": "self",
-            "href": "<server_path>/php-mysql-films-rest-api/persons{?name=}",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/persons{?name=}",
             "type": "GET"
         },
         {
             "rel": "self",
-            "href": "<server_path>/php-mysql-films-rest-api/persons",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/persons",
             "type": "POST"
         },
         {
             "rel": "self",
-            "href": "<server_path>/php-mysql-films-rest-api/persons/{id}",
+            "href": "http://localhost:8080//php-mysql-films-rest-api/persons/{id}",
             "type": "DELETE"
         }
     ]
@@ -256,7 +240,7 @@ Search persons
 ```
 
 ### Testing
-The directory `postman` includes JSON files for an environment and a collection that can be imported to [Postman](https://www.postman.com/) to test the API .
+The directory `postman` includes JSON files for an environment and a collection that can be imported to [Postman](https://www.postman.com/) to test the API.
 
 ## Tools
 PHP8 / MySQL
