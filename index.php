@@ -89,6 +89,7 @@ if ($pieces == 1) {
                             http_response_code(400);
                             echo APIUtils::formatError();
                         } else {
+                            http_response_code(201);
                             $result = $person->add($_POST['name']);
                             switch ($result) {
                                 case 0:
@@ -100,7 +101,6 @@ if ($pieces == 1) {
                                     echo APIUtils::formatError('The person already exists');
                                     break;
                                 default:
-                                    http_response_code(201);
                                     echo APIUtils::addHATEOAS($result, Entity::ENTITY_PERSONS);
                             }
                         }                        
@@ -168,7 +168,8 @@ if ($pieces == 1) {
                         if (!isset($_POST['title'])) {
                             http_response_code(500);
                             echo APIUtils::formatError();
-                        } else {
+                            } else {
+                            http_response_code(201);
                             echo APIUtils::addHATEOAS($movie->add($_POST), Entity::ENTITY_FILMS);
                         }
                         break;

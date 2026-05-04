@@ -6,8 +6,8 @@ It includes a debugging utility that logs every request and error to an HTML fil
 ## API Documentation
 
 ### Installation
-- Start the application as a Docker container: `docker-compose up -d`
-- Stop the application: `docker-compose down`
+- Start the application as a Docker container: `docker compose up -d`
+- Stop the application: `docker compose down`
 
 ### Main usage
 
